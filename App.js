@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import {
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import MovieCard from './components/MovieCard'
 
 export default class App extends React.Component {
@@ -43,23 +49,36 @@ export default class App extends React.Component {
     ]
   }
 
+  removeMovie = (id) => {
+    const movies = this.state.movies.filter(item => item.id !== id)
+    this.setState({
+      movies: movies
+    })
+  }
+
   render() {
     return (
-      <View style={styles.main}>
-        {
-          this.state.movies.map(function(movie) {
-            return (
-              <MovieCard
-                key={movie.id}
-                poster={movie.poster}
-                title={movie.title}
-                origin={movie.origin}
-                rate={movie.rate}
-              />
-            )
-          })
-        }
-      </View>
+      <ScrollView>
+        <View style={styles.main}>
+          {
+            this.state.movies.map((movie) => {
+              return (
+                <TouchableOpacity
+                  key={movie.id}
+                  onLongPress={ () => { this.removeMovie(movie.id) }}
+                >
+                  <MovieCard
+                    poster={movie.poster}
+                    title={movie.title}
+                    origin={movie.origin}
+                    rate={movie.rate}
+                  />
+                </TouchableOpacity>
+              )
+            })
+          }
+        </View>
+      </ScrollView>
     );
   }
 }
