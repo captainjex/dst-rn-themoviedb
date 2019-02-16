@@ -10,7 +10,10 @@ export default class MovieCard extends React.Component {
           source={{ uri: this.props.poster}}
         />
         <View style={styles.cardTextContainer}>
-          <Text style={styles.cardText}>{this.props.title}</Text>
+          <Text
+            style={styles.cardTextTitle}
+            numberOfLines={2}
+          >{this.props.title}</Text>
           <Text style={styles.cardText}>{this.props.origin} / {this.props.rate}</Text>
         </View>
       </View>
@@ -22,18 +25,26 @@ const styles = StyleSheet.create({
   cardContainer: {
     display: 'flex',
     flexDirection: 'row',
-    height: 130,
+    height: 150-8,
+    marginTop: 8,
     marginBottom: 16,
     backgroundColor: '#334366',
     padding: 8
   },
   cardImage: {
-    width: 100
+    alignSelf: 'flex-end',
+    width: 100,
+    height: 150,
   },
   cardTextContainer: {
-    paddingLeft: 8
+    paddingLeft: 8,
+    flex: 1
   },
   cardText: {
+    color: '#fff',
+  },
+  cardTextTitle: {
+    fontSize: 18,
     color: '#fff',
   }
 })

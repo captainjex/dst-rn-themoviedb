@@ -7,46 +7,39 @@ import {
   View,
 } from 'react-native';
 import MovieCard from './components/MovieCard'
+import axios from 'axios'
+
+const IMAGE_URL = 'https://image.tmdb.org/t/p/w300'
 
 export default class App extends React.Component {
   state = {
-    movies: [
-      {
-        id: 1,
-        title: 'Terlalu Tampan',
-        origin: 'Indonesia',
-        poster: 'https://image.tmdb.org/t/p/w300/6EILpfK4c1ekAUTGo9ApU6s2Lgz.jpg',
-        rate: 7
-      },
-      {
-        id: 2,
-        title: 'Dragon Ball Z',
-        origin: 'Japan',
-        poster: 'https://image.tmdb.org/t/p/w300/7xfWyoz4SF5LHZ713eMtC2aZ0lT.jpg',
-        rate: 9
-      },
-      {
-        id: 3,
-        title: 'Alita Battle Angel',
-        origin: 'US',
-        poster: 'https://image.tmdb.org/t/p/w300/72Xk4cjiKy74AINaJ6T0HhRulLz.jpg',
-        rate: 9
-      },
-      {
-        id: 4,
-        title: 'Si Doel',
-        origin: 'Indonesia',
-        poster: 'https://image.tmdb.org/t/p/w300/6EILpfK4c1ekAUTGo9ApU6s2Lgz.jpg',
-        rate: 9
-      },
-      {
-        id: 5,
-        title: 'React',
-        origin: 'Semarang',
-        poster: 'https://image.tmdb.org/t/p/w300/6EILpfK4c1ekAUTGo9ApU6s2Lgz.jpg',
-        rate: 9
-      },
-    ]
+    movies: []
+  }
+
+  componentDidMount () {
+    this.getMovies()
+  }
+
+  getMovies = () => {
+    axios.get('https://api.themoviedb.org/3/movie/now_playing?api_key=6325d8c52adcf9fcec26157c2d4400a7&language=en-US&page=1')
+      .then(response => {
+        const movies = response.data.results.map(movie => {
+          return {
+            id: movie.id,
+            title: movie.title,
+            origin: movie.original_language,
+            poster: IMAGE_URL + movie.poster_path,
+            rate: movie.vote_average
+          }
+        })
+
+        this.setState({
+          movies: movies
+        })
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   removeMovie = (id) => {
@@ -87,7 +80,8 @@ const styles = StyleSheet.create({
   main: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#8b8e93',
+    backgroundColor: '#0e131c',
+    padding: 16,
     flex: 1,
     marginTop: StatusBar.currentHeight
   },
