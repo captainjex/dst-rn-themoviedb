@@ -7,11 +7,11 @@ export default class MovieCard extends React.Component {
       <View style={styles.cardContainer}>
         <Image
           style={styles.cardImage}
-          source={{ uri: 'https://image.tmdb.org/t/p/w300/6EILpfK4c1ekAUTGo9ApU6s2Lgz.jpg'}}
+          source={{ uri: this.props.poster}}
         />
         <View style={styles.cardTextContainer}>
           <Text style={styles.cardText}>{this.props.title}</Text>
-          <Text style={styles.cardText}>{this.props.origin} /4</Text>
+          <Text style={styles.cardText}>{this.props.origin} / {this.props.rate}</Text>
         </View>
       </View>
     )
