@@ -6,7 +6,6 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.main}>
-        <Text>Hello World!</Text>
         <MovieCard
           title="Terlalu Tampan Z"
           origin="Indonesia"
